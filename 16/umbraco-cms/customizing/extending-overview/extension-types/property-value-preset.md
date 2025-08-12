@@ -10,7 +10,7 @@ The following Manifest declares a preset for the `Umb.PropertyEditorUi.TextBox` 
 
 ```typescript
 export const manifest = {
-    type: 'propertyValuePreset';
+    type: 'propertyValuePreset',
     alias: 'my.propertyValuePreset.TextBox',
     name: 'My Property Value Preset for TextBox',
     api: () => import('./my-property-value-preset.js'),
@@ -69,7 +69,7 @@ export { UmbTrueFalsePropertyValuePreset as api };
 ```
 {% endcode %}
 
-## Utilize anything
+## Use anything
 
 The `processValue` method is async. You can request the server or use the Context-API to retrieve the necessary information to construct your value.
 
