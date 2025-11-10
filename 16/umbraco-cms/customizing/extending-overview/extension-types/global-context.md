@@ -58,14 +58,21 @@ export interface MyGlobalContextInterface {
     getCurrentUser(): Promise<string>;
     setPreference(key: string, value: any): void;
     getPreference(key: string): any;
-    getHostElement(): Element;
 }
 
-export const MY_GLOBAL_CONTEXT = new UmbContextToken<MyGlobalContextInterface>(
-    'My.GlobalContext'
+export const MY_GLOBAL_CONTEXT = new UmbContextToken<MyGlobalContext>(
+    'GlobalContext'
 );
 ```
 {% endcode %}
+
+{% hint style="info" %}
+When defining the context token, reference the context class instead of the interface for the generic type. Ex: `UmbContextToken<MyGlobalContext>`, instead of `UmbContextToken<MyGlobalContextInterface>`
+{% endhint %}%}
+
+{% hint style="info" %}
+The string passed into the contextAlias parameter does not need to match the alias registered in the manifest.
+{% endhint %}%}
 
 ### 2. Implement the Context Class
 
@@ -98,10 +105,6 @@ export class MyGlobalContext
 
     getPreference(key: string): any {
         return this.#preferences.get(key);
-    }
-
-    getHostElement(): Element {
-        return this;
     }
 }
 
