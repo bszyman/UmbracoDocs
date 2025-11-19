@@ -33,9 +33,9 @@ import type { UmbExtensionManifestKind } from "@umbraco-cms/backoffice/extension
 
 export const customHeaderAppButton: UmbExtensionManifestKind = {
 	type: 'kind',
-	alias: 'Umb.Kind.MyButtonKind', // Unique alias for the Kind
-	matchType: 'headerApp', // Applies to Header App extensions
-	matchKind: 'button', // Defines the Kind alias
+	alias: 'Umb.Kind.MyButtonKind', 
+	matchType: 'headerApp', 
+	matchKind: 'button', 
 	manifest: {
 		// Add default properties for the 'button' Kind
     	elementName: 'umb-header-app-button',
@@ -68,8 +68,6 @@ const manifest = {
 		href: '/some/path/to/open/when/clicked',
   },
 };
-
-extensionRegistry.register(manifest);
 ```
 
 In this example, the Header App extension uses the `kind: 'button'`, meaning it inherits the `elementName` defined in the Button Kind. The extension can still add custom properties (like metadata in this case) to further customize the behavior or appearance.
@@ -85,20 +83,17 @@ This example uses the dynamic extension registration approach. `umbExtensionsReg
 {% endhint %}
 
 ```typescript
-import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import type { UmbExtensionManifestKind } from "@umbraco-cms/backoffice/extension-registry";
 
 export const customHeaderAppButton: UmbExtensionManifestKind = {
   type: 'kind',
-  alias: 'Umb.Kind.MyButtonKind',  // Alias for the Kind
-  matchType: 'headerApp', // Extension type the Kind applies to
-  matchKind: 'customHeaderAppButton',  // Defines the Kind alias
+  alias: 'Umb.Kind.MyButtonKind', 
+  matchType: 'headerApp', 
+  matchKind: 'customHeaderAppButton', 
   manifest: {
     elementName: 'umb-header-app-button',
   },
 };
-
-umbExtensionsRegistry.register(manifest);
 ```
 {% endcode %}
 
@@ -108,11 +103,9 @@ Now another Header App extension can be created without defining `elementName`, 
 
 {% code title="kinds/manifests.ts" %}
 ```typescript
-import { umbExtensionsRegistry } from "@umbraco-cms/backoffice/extension-registry";
-
 const manifest = {
-	type: 'headerApp', // Extension type
-	kind: 'customHeaderAppButton',  // References the matchKind property ('customHeaderAppButton')
+	type: 'headerApp', 
+	kind: 'customHeaderAppButton', 
 	name: 'My Header App Example',
 	alias: 'My.HeaderApp.Example',
 	meta: {
@@ -121,8 +114,6 @@ const manifest = {
 		href: '/some/path/to/open/when/clicked',
 	},
 };
-
-umbExtensionsRegistry.register(manifest);
 ```
 {% endcode %}
 
