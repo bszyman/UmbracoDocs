@@ -4,29 +4,36 @@ description: Create reusable, standardized configurations for extensions, helpin
 
 # Kind
 
-A Kind is a preset configuration that extensions can inherit to ensure consistency and reduce redundancy. It defines a set of default properties or behaviors that extensions can adopt, making it easier to maintain and configure extensions that share similar functionality.
+A Kind is a preset configuration that extensions inherit for consistency. It reduces redundancy by defining default properties. This simplifies maintenance for extensions sharing similar functionality.
 
-A Kind is always linked to a specific extension type. Extensions using the same type and referencing a Kind automatically inherit its settings, ensuring uniformity across different extensions.
+Every Kind links to a specific extension type. Extensions of that type referencing a Kind automatically inherit its settings. This ensures uniformity across different extensions.
 
 ## Benefits of Using a Kind
 
-- Reduces redundancy – Common settings are defined once and reused across extensions.
-- Ensures consistency – Extensions using the same Kind follow a standardized structure and behavior.
-- Simplifies extension definitions – Extensions inherit predefined properties, reducing manual configuration.
+- **Reduces redundancy** – Defines common settings once for reuse across extensions.
+- **Ensures consistency** – Extensions using the same Kind follow a standardized structure.
+- **Simplifies definitions** – Extensions inherit predefined properties to reduce manual configuration.
 
 ## Kind Registration
 
-To register a Kind, use the same method as other extensions. The key properties that define a Kind registration are:
+Register a Kind using the standard extension method. The key properties defining a Kind registration are:
 
-- `type`: Always set to `kind`.
+- `type`: Always set this to `kind`.
 - `alias`: A unique identifier for the Kind.
-- `matchType`: Specifies the extension type that the Kind applies to.
-- `matchKind`: Defines the Kind alias, which extensions must reference.
-- `manifest`: Contains the preset values that extensions will inherit.
+- `matchType`: Specifies the applicable extension type.
+- `matchKind`: Defines the Kind alias referenced by extensions.
+- `manifest`: Contains preset values for inheritance.
 
 ### Example: Registering a Button Kind for Header Apps
 
-The following example shows how to register a Button Kind for [**Header Apps**](../extension-types/header-apps.md). This kind provides a preset configuration for a button element that can be reused by other Header App extensions.
+This example registers a Button Kind for [**Header Apps**](../extension-types/header-apps.md). It provides a preset button configuration for other extensions to reuse.
+
+Properties:
+
+- `type` is 'kind', registering it as a Kind extension.
+- `matchType` is 'headerApp', targeting Header App extensions.
+- `matchKind` is 'button', serving as the Kind's alias. 
+- The `manifest` holds default properties, like `elementName`, for inheritance.
 
 ```typescript
 import type { UmbExtensionManifestKind } from "@umbraco-cms/backoffice/extension-registry";
@@ -43,16 +50,9 @@ export const customHeaderAppButton: UmbExtensionManifestKind = {
 };
 ```
 
-Properties:
-
-- `type` is set to 'kind' to register it as a Kind extension.
-- `matchType` is 'headerApp', specifying that this Kind is for Header App extensions.
-- `matchKind` is 'button', which is the alias of the Kind.
-- The `manifest` contains default properties like elementName that extensions using this Kind will inherit.
-
 ## Using the Kind in Other Extensions
 
-To use the Kind in other extensions, the extension must reference it by setting the `type` and `kind` properties. The extension will automatically inherit the Kind's properties.
+Use a Kind by setting the `type` and `kind` properties. The extension then automatically inherits the Kind's properties.
 
 ### Example: Header App Extension Using the Button Kind
 
@@ -70,18 +70,13 @@ const manifest = {
 };
 ```
 
-In this example, the Header App extension uses the `kind: 'button'`, meaning it inherits the `elementName` defined in the Button Kind. The extension can still add custom properties (like metadata in this case) to further customize the behavior or appearance.
+Here, the extension uses `kind: 'button'` to inherit `elementName`. It also adds custom metadata to further customize behavior or appearance.
 
-## Kind Example
+## Custom Kind Example
 
-Here’s an example of how to register and use the Button Kind in a Header App extension:
+The code below demonstrates how to create a custom kind and then use it to create a header button app.
 
 {% code title="kinds/manifests.ts" %}
-
-{% hint style="info" %}
-This example uses the dynamic extension registration approach. `umbExtensionsRegistry.register()` might be called from within an entrypoint lifecycle method like `onInit()`. For more information, see the [Backoffice Entry Point](./backoffice-entry-point.md) article.
-{% endhint %}
-
 ```typescript
 import type { UmbExtensionManifestKind } from "@umbraco-cms/backoffice/extension-registry";
 
@@ -97,11 +92,11 @@ export const customHeaderAppButton: UmbExtensionManifestKind = {
 ```
 {% endcode %}
 
-This code registers the Button Kind, so other Header App extensions using `type: 'headerApp'` and `kind: 'customHeaderAppButton'` will inherit the preset `elementName: 'umb-header-app-button'`.
+This code registers the Button Kind. Other Header App extensions using `type: 'headerApp'` and `kind: 'customHeaderAppButton'` will inherit the preset `elementName: 'umb-header-app-button'`.
 
-Now another Header App extension can be created without defining `elementName`, as it will automatically inherit it from the Kind:
+Another Header App extension can be created without defining `elementName`. It automatically inherits this property from the Kind.
 
-{% code title="kinds/manifests.ts" %}
+{% code title="header-button/manifests.ts" %}
 ```typescript
 const manifest = {
 	type: 'headerApp', 
@@ -117,4 +112,4 @@ const manifest = {
 ```
 {% endcode %}
 
-By referencing the Kind, the extension inherits shared properties like `elementName`, ensuring consistency and reducing redundancy across extensions. This method also makes it easier to update configurations across multiple extensions.
+Referencing the Kind ensures consistency by inheriting shared properties. This also simplifies updating configurations across multiple extensions.
