@@ -84,7 +84,7 @@ export const customHeaderAppButton: UmbExtensionManifestKind = {
   type: 'kind',
   alias: 'Umb.Kind.MyButtonKind', 
   matchType: 'headerApp', 
-  matchKind: 'customHeaderAppButton', 
+  matchKind: 'button', 
   manifest: {
     elementName: 'umb-header-app-button',
   },
@@ -92,7 +92,7 @@ export const customHeaderAppButton: UmbExtensionManifestKind = {
 ```
 {% endcode %}
 
-This code registers the Button Kind. Other Header App extensions using `type: 'headerApp'` and `kind: 'customHeaderAppButton'` will inherit the preset `elementName: 'umb-header-app-button'`.
+This code registers the Button Kind. Other Header App extensions using `type: 'headerApp'` and `kind: 'button'` will inherit the preset `elementName: 'umb-header-app-button'`.
 
 Another Header App extension can be created without defining `elementName`. It automatically inherits this property from the Kind.
 
@@ -100,7 +100,7 @@ Another Header App extension can be created without defining `elementName`. It a
 ```typescript
 const manifest = {
 	type: 'headerApp', 
-	kind: 'customHeaderAppButton', 
+	kind: 'button', 
 	name: 'My Header App Example',
 	alias: 'My.HeaderApp.Example',
 	meta: {
